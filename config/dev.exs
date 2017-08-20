@@ -37,7 +37,20 @@ config :phoenix, :stacktrace_depth, 20
 config :my_app, MyApp.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "",
   database: "my_app_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :guardian, Guardian,
+  allowed_algos: ["HS512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  issuer: "MyApp",
+  ttl: { 30, :days },
+  allowed_drift: 2000,
+  verify_issuer: true, # optional
+  secret_key: %{
+    "k" => "-j4bNKGxHlp8dr-JFCS6viWMxavrZqYqrWW6edxOr9HqbYh0KmDQiZOoyDX7-0O5mUTUt_CiSFBECfe2of-guw",
+    "kty" => "oct"
+  },
+  serializer: MyApp.GuardianSerializer
